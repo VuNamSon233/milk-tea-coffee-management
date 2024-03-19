@@ -27,7 +27,9 @@ void NhanVien::Xuat()
 }
 class NguyenLieu {
 public:
-
+	string LoaiTra;
+	string LoaiSua;
+	int soluong;
 };
 
 void main()
