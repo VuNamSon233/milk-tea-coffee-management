@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 using namespace std;
+void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num);
 class nhanvien {
 private:
 	int Manv, Cmt;
@@ -214,75 +215,270 @@ void menu(nhanvien nv[], int n) {
 			system("pause");
 			break;
 		case 9:
-			exit(0);
 			break;
 		default:
 			cout << "Khong co du lieu ban nhap.";
 			break;
 		}
-	} while (choice != 0);
+	} while (choice != 9);
 }
-
 
 class NguyenLieu {
 public:
-	string LoaiTra;
-	string LoaiSua;
-	int soluong; 
+	string ten;
+	int soLuong;
+
+	void nhap() {
+		cin.ignore(1, '\n');
+		cout << "Ten nguyen lieu: ";
+		getline(cin, ten);
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "So luong nguyen lieu: ";
+		cin >> soLuong;
+	}
+
+	void xuat() {
+		cout << "Nguyen lieu " << ten << ": so luong " << soLuong << endl;
+	}
+
+	static void baoCaoTinhTrangNguyenLieu(NguyenLieu NL[], int n) {
+		cout << "Bao cao tinh trang nguyen lieu:" << endl;
+		for (int i = 0; i < n; ++i) {
+			cout << NL[i].ten << ": " << NL[i].soLuong << endl;
+		}
+	}
+
+	static void ghiNhanNLHet(NguyenLieu NL) {
+		cout << "Nguyen lieu het trong kho: " << NL.ten << endl;
+	}
 };
-class Tra: public NguyenLieu {
+
+bool kiemTraNL(NguyenLieu NL[], int n) {
+	for (int i = 0; i < n; ++i) {
+		if (NL[i].soLuong > 0) {
+			return false;
+		}
+	}
+	return true;
+}
+
+void themNguyenLieu(NguyenLieu NL[], int& n) {
+	/*int soLuong;
+	cout << "Nhap so luong nguyen lieu can them: ";
+	cin >> soLuong;*/
+	for (int i = 0; i < n; i++) {
+		NL[i].nhap();
+		//n++;
+	}
+}
+
+void xoaNguyenLieu(NguyenLieu NL[], int& n) {
+	int vt;
+	cout << "Nhap vi tri can xoa: ";
+	cin >> vt;
+	for (int i = vt; i < n - 1; ++i) {
+		NL[i] = NL[i + 1];
+	}
+	n--;
+}
+
+void kiemTraMonHet(NguyenLieu NL[], int n) {
+	for (int i = 0; i < n; ++i) {
+		if (NL[i].soLuong == 0) {
+			NguyenLieu::ghiNhanNLHet(NL[i]);
+		}
+	}
+}
+
+class MonDoUong {
 public:
-	string NhanHieuTra;
-	
+	string ten;
+	float gia;
+
+	void nhap() {
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Ten mon: ";
+		getline(cin, ten);
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Gia mon: ";
+		cin >> gia;
+	}
+
+	void xuat() {
+		cout << "Ten Mon: " << ten << "  Gia mon: " << gia << endl;
+	}
 };
-class BanHang {
-public:
-	BanHang() 
-	{
-		do
-		{
-			system("cls");
-			cout << "Moi chon do uong: \n";
-			cout << "1. Tra sua tran chau (15.000 dong)\n";
-			cout << "2. Tra sua Thai (20.000 dong)\n";
-			cout << "0. Thoat";
-			cin >> LoaiMon;
-			switch (LoaiMon) {
+
+void themMonMenu(MonDoUong DoUong[], int& m) {
+	/*int soLuong;
+	cout << "Nhap so luong mon can them: ";
+	cin >> soLuong;*/
+	for (int i = 0; i < m; ++i) {
+		DoUong[i].nhap();
+		//m++;
+	}
+}
+
+void xoaMonMenu(MonDoUong DoUong[], int& m) {
+	int vt;
+	cout << "Nhap vi tri can xoa: ";
+	cin >> vt;
+	for (int i = vt; i < m - 1; ++i) {
+		DoUong[i] = DoUong[i + 1];
+	}
+	m--;
+}
+
+void inMenu(MonDoUong DoUong[], int m) {
+	cout << "Menu:" << endl;
+	for (int i = 0; i < m; ++i) {
+		DoUong[i].xuat();
+	}
+}
+
+void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m) {
+	int dem;
+	do {
+		cout << "0. Thoat" << endl;
+		cout << "1. Nguyen Vat Lieu" << endl;
+		cout << "   1.A) Them nguyen vat lieu" << endl;
+		cout << "   1.B) Xuat bang nguyen vat lieu" << endl;
+		cout << "   1.C) Xoa nguyen vat lieu" << endl;
+		cout << "   1.D) Kiem tra mon het trong kho" << endl;
+		cout << "2. Menu" << endl;
+		cout << "   2.A) Them mon menu" << endl;
+		cout << "   2.B) Xoa mon trong menu" << endl;
+		cout << "   2.C) In menu" << endl;
+
+		cout << "____________________________________________" << endl;
+		cout << "Nhap chuc nang: ";
+		cin >> dem;
+		switch (dem) {
+		case 1:
+			cout << "1) Them nguyen vat lieu " << endl;
+			cout << "2) Xuat bang nguyen vat lieu" << endl;
+			cout << "3) Xoa nguyen vat lieu" << endl;
+			cout << "4) Kiem tra mon het trong kho" << endl;
+			cout << "__________________________________" << endl;
+			cout << "Nhap chuc nang: ";
+			cin >> dem;
+			switch (dem) {
 			case 1:
-				cout << "So luong: ";
-				cin >> SoLuongMon_TraTranChau;
+				/*cout << "Moi ban nhap so luong nguyen lieu muon them vao: ";
+				cin >> n;*/
+				cin.ignore(1, '\n');
+				themNguyenLieu(NL, n);
+				break;
 			case 2:
-				cout << "So luong: ";
-				cin >> SoLuongMon_TraThai;
+				cin.ignore(1, '\n');
+				NguyenLieu::baoCaoTinhTrangNguyenLieu(NL, n);
+				break;
+			case 3:
+				cin.ignore(1, '\n');
+				xoaNguyenLieu(NL, n);
+				break;
+			case 4:
+				cin.ignore(1, '\n');
+				kiemTraMonHet(NL, n);
+				break;
 			default:
 				break;
 			}
-		} while (LoaiMon != 0);
-	}
-	float TongTienThanhToan=0;
-	int SoLuongMon_TraTranChau=0;
-	int SoLuongMon_TraThai=0;
-	int LoaiMon;
-	void TinhTien();
-	void InHoaDon();
-};
-void BanHang::TinhTien()
-{
-	TongTienThanhToan = 15000 * SoLuongMon_TraTranChau + 20000 * SoLuongMon_TraThai;
+			break;
+		case 2:
+			cout << "1) Them mon menu" << endl;
+			cout << "2) Xoa mon trong menu" << endl;
+			cout << "3) In menu" << endl;
+			cout << "______________________" << endl;
+			cout << "Nhap chuc nang: ";
+			cin >> dem;
+			switch (dem) {
+			case 1:
+				/*cout << "Moi ban nhap so luong mon do uong muon them vao: ";
+				cin >> m;*/
+				cin.ignore(1, '\n');
+				themMonMenu(DoUong, m);
+				break;
+			case 2:
+				cin.ignore(1, '\n');
+				xoaMonMenu(DoUong, m);
+				break;
+			case 3:
+				cin.ignore(1, '\n');
+				inMenu(DoUong, m);
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+	} while (dem != 0);
 }
-void BanHang::InHoaDon()
+void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 {
-	ofstream Bill("hoadon.txt");
-	Bill << "1. Tra sua tran chau" << "\t" << SoLuongMon_TraTranChau << "\t" << 15000 * SoLuongMon_TraTranChau << "\n";
-
-	Bill.close();
+	int choice = 0;
+	do {
+		system("cls");
+		cout << "Xin chao mung ban da den voi phan mem quan ly quan tra sua! \nLua chon cac chuc nang bang cach bam (1-3) tren ban phim";
+		cout << "\n1. Quan ly nhan vien";
+		cout << "\n2. Phan loai nguyen lieu, tao menu";
+		cout << "\n3. Ban hang";
+		cout << "\n0. Thoat chuong trinh";
+		cout << "\nBan chon: ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+		{
+			cout << "Nhap so nhan vien cua quan: ";
+			cin >> nhanvien_num;
+			nhanvien* nv = new nhanvien[nhanvien_num];
+			menu(nv, nhanvien_num);
+			break;
+		}
+		case 2:
+		{
+			cout << "Moi ban nhap so luong nguyen lieu muon them vao: ";
+			cin >> nguyenlieu_num;
+			cout << "Moi ban nhap so luong mon an muon them vao: ";
+			cin >> monuong_num;
+			cin.ignore(1, '\n');
+			NguyenLieu* NL = new NguyenLieu[nguyenlieu_num];
+			MonDoUong* DoUong = new MonDoUong[monuong_num];
+			quanLy(NL, nguyenlieu_num, DoUong, monuong_num);
+			delete[] NL;
+			delete[] DoUong;
+			break;
+		}
+		}
+	} while (choice != 0);
 }
 
 void main()
 {
-	int n;
+	/*int n;
 	cout << "Chao mung ban den voi phan mem quan ly ban tra sua! Xin moi nhap so nhan vien: ";
 	cin >> n;
 	nhanvien* nv = new nhanvien[n];
-	menu(nv, n);
+	menu(nv, n);*/
+	/*int n = 3;
+	int m = 3;*/
+	/*int n=0;
+	int m=0;
+	cout << "Moi ban nhap so luong nguyen lieu muon them vao: ";
+	cin >> n;
+	cout << "Moi ban nhap so luong mon an muon them vao: ";
+	cin >> m;
+	cin.ignore(1, '\n');
+	NguyenLieu* NL = new NguyenLieu[n];
+	MonDoUong* DoUong = new MonDoUong[m];
+	quanLy(NL, n, DoUong, m);
+	delete[] NL;
+	delete[] DoUong;*/
+	int n = 0;
+	int m = 0;
+	int nv = 0;
+	MainMenu(nv, n, m);
 }
