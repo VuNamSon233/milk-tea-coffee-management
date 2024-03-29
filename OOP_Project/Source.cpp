@@ -24,8 +24,11 @@ public:
 		cout << " \nNhap dia chi: "; getline(cin, diachi); //fflush(stdin);
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << " \nNhap so the CMT: "; cin >> Cmt; //fflush(stdin);
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << " \nNhap luong co ban: "; cin >> luongCB; //fflush(stdin);
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << " \nNhap phu cap: "; cin >> phucap; //fflush(stdin);
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		thuclinh = luongCB + phucap;
 	}
 	//xay dung phuong thuc xuat
@@ -72,10 +75,11 @@ void xuat_file(nhanvien nv[], int n)
 //Xuat n nhanvien
 void xuatds(nhanvien nv[], int n) {
 	cout << "\n Manv" << setw(14) << "Ho Ten" << setw(14) << "Ngay Sinh" << setw(10) << "Dia Chi" << setw(11);
-	cout << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12);
+	cout << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12)<<"\n";
 
 	for (int i = 0; i < n; i++) {
 		nv[i].xuat();
+		cout << "\n";
 	}
 	cout << "Xuat danh sach ra file danhsach.txt...\n";
 	xuat_file(nv,n);
@@ -184,6 +188,7 @@ void menu(nhanvien nv[], int n) {
 		case 2:
 			xuatds(nv, n);
 			cout << endl;
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 			system("\npause");
 			break;
 		case 3:
@@ -375,6 +380,7 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m) {
 			case 2:
 				cin.ignore(1, '\n');
 				NguyenLieu::baoCaoTinhTrangNguyenLieu(NL, n);
+				system("pause");
 				break;
 			case 3:
 				cin.ignore(1, '\n');
@@ -473,12 +479,9 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 		cout << "\n2. Phan loai nguyen lieu, tao menu";
 		cout << "\n3. Ban hang";
 		cout << "\n0. Thoat chuong trinh";
-		cout << "\nMoi ban nhap so luong nguyen lieu muon them vao: ";
-		cin >> nguyenlieu_num;
 		cout << "\nMoi ban nhap so luong mon an muon them vao: ";
 		cin >> monuong_num;
 		cin.ignore(1, '\n');
-		NguyenLieu* NL = new NguyenLieu[nguyenlieu_num];
 		MonDoUong* DoUong = new MonDoUong[monuong_num];
 		cout << "\nBan chon chuc nang bang cach bam (1-3) tren ban phim: ";
 		cin >> choice;
@@ -494,6 +497,9 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 		}
 		case 2:
 		{
+			cout << "\nMoi ban nhap so luong nguyen lieu muon them vao: ";
+			cin >> nguyenlieu_num;
+			NguyenLieu* NL = new NguyenLieu[nguyenlieu_num];
 			quanLy(NL, nguyenlieu_num, DoUong, monuong_num);
 			//delete[] NL;
 			//delete[] DoUong;
