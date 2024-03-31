@@ -1,0 +1,6 @@
+Hoa don thanh toan: 
+Ten do uong	So luong	Gia
+1. Tra sua	6	120000
+2. Nuoc loc	20	100000
+Tong tien can thanh toan: 220000
+Cam on quy khach! Hen gap lai

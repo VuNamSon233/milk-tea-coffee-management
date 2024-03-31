@@ -40,6 +40,18 @@ public:
 	int get_Manv() {
 		return Manv;
 	}
+	string get_HoTen() {
+		return hoten;
+	}
+	string get_DOB() {
+		return ngaysinh;
+	}
+	string get_adr() {
+		return diachi;
+	}
+	float get_luong() {
+		return luongCB;
+	}
 	int get_Cmt() {
 		return Cmt;
 	}
@@ -61,16 +73,7 @@ void nhapds(nhanvien nv[], int n) {
 void xuat_file(nhanvien nv[], int n)
 {
 	//xay dung phuong thuc xuat ra file .txt danh sach nhan vien
-	ofstream DSNhanVien("danhsach.txt"); // tạo file danhsach.txt 
-	ifstream DSNhanVien_open;
-	DSNhanVien_open.open("danhsach.txt");
-	DSNhanVien << "\n Manv" << setw(14) << "Ho Ten" << setw(14) << "Ngay Sinh" << setw(10) << "Dia Chi" << setw(11);
-	DSNhanVien << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12);
-	for (int i = 0; i < n; i++)
-	{
-		
-	}
-	DSNhanVien.close();
+	
 }
 //Xuat n nhanvien
 void xuatds(nhanvien nv[], int n) {
@@ -81,9 +84,7 @@ void xuatds(nhanvien nv[], int n) {
 		nv[i].xuat();
 		cout << "\n";
 	}
-	cout << "Xuat danh sach ra file danhsach.txt...\n";
 	xuat_file(nv,n);
-	cout << "Xuat file thanh cong. ";
 }
 //Tim kiem theo ma sinh vien
 void timkiemManv(nhanvien nv[], int n) {
@@ -442,7 +443,7 @@ void LuaChonMon(MonDoUong douong[], BanHang bh[], int m)
 {
 	bh[m].Selection_num();
 	cout << "\n";
-	cout << "Ban lua chon mon " << douong[m].ten << "voi gia tien: " << douong[m].gia<<"\n";
+	cout << "Ban lua chon "<<bh[m].soluongmon<< " mon " << douong[m].ten << " voi gia tien: " << douong[m].gia*bh[m].soluongmon << "\n";
 }
 float ThanhToan(MonDoUong douong[], BanHang bh[], int m)
 {
@@ -453,6 +454,7 @@ float ThanhToan(MonDoUong douong[], BanHang bh[], int m)
 }
 void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[])
 {
+	ofstream hoadon_file("hoadon.txt");
 	float tongtien = 0;
 	for (int i = 0; i < m; i++)
 	{
@@ -468,6 +470,22 @@ void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[])
 	}
 	cout << "Tong tien can thanh toan: " << tongtien << "\n";
 	cout << "Cam on quy khach! Hen gap lai";
+	if (hoadon_file.is_open()) //Ham kiem tra file mo hay khong
+	{
+		cout << "\nMo file thanh cong. Dang thuc hien xuat hoa don vao file hoadon.txt";
+		hoadon_file << "Hoa don thanh toan: \n";
+		hoadon_file << "Ten do uong\t\So luong\tGia\n";
+		for (int i = 0; i < m; i++)
+		{
+			hoadon_file << i + 1 << ". ";
+			hoadon_file << douong[i].ten << "\t" << bh[i].soluongmon << "\t" << price[i];
+			hoadon_file << "\n";
+		}
+		hoadon_file << "Tong tien can thanh toan: " << tongtien << "\n";
+		hoadon_file << "Cam on quy khach! Hen gap lai";
+	}
+	else cout << "Loi khi mo file hoadon.txt";
+
 }
 void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 {
@@ -514,7 +532,7 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 			BanHang * bh = new BanHang[monuong_num];
 			cout << "Moi ban chon do uong trong menu duoi day: \n";
 			inMenu(DoUong, monuong_num);
-			cout << "\nBam (0-" << monuong_num << ") de lua chon mon uong";
+			cout << "\nBam (0-" << monuong_num-1 << ") de lua chon mon uong";
 			cin >> loaimon;
 			loaimon_store[0] = loaimon;
 			LuaChonMon(DoUong, bh, loaimon);
