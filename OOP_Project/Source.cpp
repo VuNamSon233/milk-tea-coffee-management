@@ -541,7 +541,7 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 			while (choice_new == 'Y')
 			{
 				inMenu(DoUong, monuong_num);
-				cout << "\nBam (0-" << monuong_num << ") de lua chon mon uong";
+				cout << "\nBam (0-" << monuong_num-1 << ") de lua chon mon uong";
 				cin >> loaimon;
 				loaimon_store_num++;
 				loaimon_store[loaimon_store_num] = loaimon;
