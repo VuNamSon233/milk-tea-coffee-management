@@ -590,4 +590,5 @@ void main()
 	int m = 0;
 	int nv = 0;
 	MainMenu(nv, n, m);
+	cout << "Hello world!"
 }
