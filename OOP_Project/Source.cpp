@@ -73,7 +73,25 @@ void nhapds(nhanvien nv[], int n) {
 void xuat_file(nhanvien nv[], int n)
 {
 	//xay dung phuong thuc xuat ra file .txt danh sach nhan vien
-	
+	ofstream outFile("danh_sach_nhan_vien.txt");
+	if (outFile.is_open())
+	{
+		outFile << "Danh sach nhan vien:\n";
+		outFile << " Manv" << setw(14) << "Ho Ten" << setw(14) << "Ngay Sinh" << setw(10) << "Dia Chi" << setw(11);
+		outFile << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12) << "\n";
+
+		for (int i = 0; i < n; i++)
+		{
+			outFile << setw(10) << nv[i].get_Manv() << setw(14) << nv[i].get_HoTen() << setw(14) << nv[i].get_DOB() << setw(10) << nv[i].get_adr();
+			outFile << setw(12) << nv[i].get_Cmt() << setw(10) << nv[i].get_luong() << setw(10) << nv[i].get_phucap() << setw(11) << nv[i].get_thuclinh() << setw(12) << "\n";
+		}
+		outFile.close();
+		cout << "Xuat file thanh cong!\n";
+	}
+	else
+	{
+		cout << "Khong the mo file de xuat!\n";
+	}
 }
 //Xuat n nhanvien
 void xuatds(nhanvien nv[], int n) {
@@ -327,6 +345,7 @@ void themMonMenu(MonDoUong DoUong[], int& m) {
 	}
 }
 
+
 void xoaMonMenu(MonDoUong DoUong[], int& m) {
 	int vt;
 	cout << "Nhap vi tri can xoa: ";
@@ -344,8 +363,59 @@ void inMenu(MonDoUong DoUong[], int m) {
 		DoUong[i].xuat();
 	}
 }
+static void xuatMenuFile(MonDoUong DoUong[], int m) {
+	ofstream menuFile("menu.txt");
+	if (menuFile.is_open()) {
+		menuFile << "\n Mo file thanh cong. Dang thuc hien xuat menu vao file menu.txt" << endl;
+		for (int i = 0; i < m; ++i) {
+			menuFile << DoUong[i].ten << " - " << DoUong[i].gia << " VND" << endl;
+		}
+		//cout << "Menu đã được xuất sang menu.txt thành công!" << endl;
+		cout << "Menu da duoc xuat sang menu.txt thanh cong!" << endl;
+		cout << "Moi quy khach lua chon!" << endl;
+		cout << "Cam on quy khach!" << endl;
+		menuFile.close();
+	}
+	else {
+		cout << "Loi khi mo file menu.txt" << endl;
+	}
+}
 
-void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m) {
+class Topping
+{
+public:
+	string ten;
+	float gia;
+	void nhap_Topping()
+	{
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Ten topping: ";
+		getline(cin, ten);
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "Gia topping: ";
+		cin >> gia;
+	}
+	void xuat_Topping()
+	{
+		cout << "Ten topping: " << ten << "  Gia topping: " << gia << endl;
+	}
+};
+void ThemMonTopping(Topping topping[], int& m)
+{
+	for (int i = 0; i < m; i++)
+	{
+		topping[i].nhap_Topping();
+	}
+}
+void XuatMenuTopping(Topping topping[], int m)
+{
+	for (int i = 0; i < m; i++)
+	{
+		cout << i << ". ";
+		topping[i].xuat_Topping();
+	}
+}
+void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m, Topping topping[], int &p) {
 	int dem;
 	do {
 		system("cls"); //xoa man hinh
@@ -358,7 +428,8 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m) {
 		cout << "2. Menu" << endl;
 		cout << "   2.A) Them mon menu" << endl;
 		cout << "   2.B) Xoa mon trong menu" << endl;
-		cout << "   2.C) In menu" << endl;
+		cout << "   2.C) Them topping" << endl;
+		cout << "   2.D) In menu" << endl;
 		cout << "____________________________________________" << endl;
 		cout << "Nhap chuc nang: ";
 		cin >> dem;
@@ -398,7 +469,10 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m) {
 		case 2:
 			cout << "1) Them mon menu" << endl;
 			cout << "2) Xoa mon trong menu" << endl;
-			cout << "3) In menu" << endl;
+			cout << "3) Them topping" << endl;
+			cout << "4) In menu" << endl;
+			cout << "5) In bang topping" << endl;
+			cout << "6) Xuat file menu.txt" << endl;
 			cout << "______________________" << endl;
 			cout << "Nhap chuc nang: ";
 			cin >> dem;
@@ -415,7 +489,21 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m) {
 				break;
 			case 3:
 				cin.ignore(1, '\n');
+				ThemMonTopping(topping, p);
+				break;
+			case 4:
+				cin.ignore(1, '\n');
 				inMenu(DoUong, m);
+				system("pause");
+				break;
+			case 5:
+				cin.ignore(1, '\n');
+				XuatMenuTopping(topping, p);
+				system("pause");
+				break;
+			case 6:
+				cin.ignore(1, '\n');
+				xuatMenuFile(DoUong, m);
 				system("pause");
 				break;
 			default:
@@ -431,28 +519,45 @@ class BanHang
 {
 public:
 	int soluongmon;
-	int price;
+	char topping_choice;
 	void Selection_num()
 	{
 		cout << "Moi ban chon so luong mon do uong: ";
 		cin >> soluongmon;
 	}
+	bool Topping_pick()
+	{
+		cout << "Ban co muon them topping khong? (Y/N)";
+		cin >> topping_choice;
+		if (topping_choice == 'Y')
+			return true;
+		else return false;
+	}
 	
 };
-void LuaChonMon(MonDoUong douong[], BanHang bh[], int m)
+void LuaChonMon(MonDoUong douong[], BanHang bh[], int m, Topping topping[], int &p, int &selection_topping)
 {
 	bh[m].Selection_num();
 	cout << "\n";
 	cout << "Ban lua chon "<<bh[m].soluongmon<< " mon " << douong[m].ten << " voi gia tien: " << douong[m].gia*bh[m].soluongmon << "\n";
+	bool choice = bh[m].Topping_pick();
+	if (choice == true)
+	{
+		cout << "Moi ban chon 1 loai topping duoi day bang cach bam (0-"<<p-1<<"):\n";
+		XuatMenuTopping(topping, p);
+		cin >> selection_topping;
+		cout << "\nBan lua chon topping " << topping[selection_topping].ten << " voi gia tien: " << topping[selection_topping].gia << endl;
+	}
 }
-float ThanhToan(MonDoUong douong[], BanHang bh[], int m)
+float ThanhToan(MonDoUong douong[], BanHang bh[], int m, int topping_choice, Topping topping[])
 {
 	float price;
-	price = (float)bh[m].soluongmon * douong[m].gia;
+	if (bh[m].topping_choice == 'Y') price = ((float)bh[m].soluongmon * douong[m].gia) + topping[topping_choice].gia;
+	else price = (float)bh[m].soluongmon * douong[m].gia;
 	//cout << price;
 	return price;
 }
-void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[])
+void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[], Topping topping[], int topping_choice[], int loaimon[])
 {
 	ofstream hoadon_file("hoadon.txt");
 	float tongtien = 0;
@@ -465,8 +570,16 @@ void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[])
 	for (int i = 0; i < m; i++)
 	{
 		cout << i + 1 << ". ";
-		cout << douong[i].ten << "\t" << bh[i].soluongmon << "\t" << price[i];
-		cout << "\n";
+		if (bh[loaimon[i]].topping_choice == 'Y')
+		{
+			cout << douong[loaimon[i]].ten << "(voi topping " << topping[topping_choice[i]].ten << ")" << "\t" << bh[loaimon[i]].soluongmon << "\t" << price[i];
+			cout << "\n";
+		}
+		else
+		{
+			cout << douong[loaimon[i]].ten << "\t" << bh[loaimon[i]].soluongmon << "\t" << price[i];
+			cout << "\n";
+		}
 	}
 	cout << "Tong tien can thanh toan: " << tongtien << "\n";
 	cout << "Cam on quy khach! Hen gap lai";
@@ -478,8 +591,16 @@ void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[])
 		for (int i = 0; i < m; i++)
 		{
 			hoadon_file << i + 1 << ". ";
-			hoadon_file << douong[i].ten << "\t" << bh[i].soluongmon << "\t" << price[i];
-			hoadon_file << "\n";
+			if (bh[loaimon[i]].topping_choice == 'Y')
+			{
+				hoadon_file << douong[loaimon[i]].ten << " (voi topping " << topping[topping_choice[i]].ten << ")" << "\t" << bh[loaimon[i]].soluongmon << "\t" << price[i];
+				hoadon_file << "\n";
+			}
+			else
+			{
+				hoadon_file << douong[loaimon[i]].ten << "\t" << bh[loaimon[i]].soluongmon << "\t" << price[i];
+				hoadon_file << "\n";
+			}
 		}
 		hoadon_file << "Tong tien can thanh toan: " << tongtien << "\n";
 		hoadon_file << "Cam on quy khach! Hen gap lai";
@@ -487,7 +608,7 @@ void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[])
 	else cout << "Loi khi mo file hoadon.txt";
 
 }
-void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
+void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num, int& topping_num)
 {
 	int choice = 0;
 	do {
@@ -501,6 +622,9 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 		cin >> monuong_num;
 		cin.ignore(1, '\n');
 		MonDoUong* DoUong = new MonDoUong[monuong_num];
+		cout << "\nMoi ban nhap so luong topping muon them vao: ";
+		cin >> topping_num;
+		Topping* topping = new Topping[topping_num];
 		cout << "\nBan chon chuc nang bang cach bam (1-3) tren ban phim: ";
 		cin >> choice;
 		switch (choice)
@@ -518,7 +642,7 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 			cout << "\nMoi ban nhap so luong nguyen lieu muon them vao: ";
 			cin >> nguyenlieu_num;
 			NguyenLieu* NL = new NguyenLieu[nguyenlieu_num];
-			quanLy(NL, nguyenlieu_num, DoUong, monuong_num);
+			quanLy(NL, nguyenlieu_num, DoUong, monuong_num, topping, topping_num);
 			//delete[] NL;
 			//delete[] DoUong;
 			//break;
@@ -528,6 +652,9 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 			int* loaimon_store = new int[MAX_ORDER];
 			int loaimon = 0;
 			int loaimon_store_num = 0;
+			int topping_choice = 0;
+			int* topping_store = new int[MAX_ORDER];
+			int topping_store_num = 0;
 			float* price = new float[MAX_ORDER];
 			BanHang * bh = new BanHang[monuong_num];
 			cout << "Moi ban chon do uong trong menu duoi day: \n";
@@ -535,7 +662,8 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 			cout << "\nBam (0-" << monuong_num-1 << ") de lua chon mon uong";
 			cin >> loaimon;
 			loaimon_store[0] = loaimon;
-			LuaChonMon(DoUong, bh, loaimon);
+			LuaChonMon(DoUong, bh, loaimon, topping, topping_num, topping_choice);
+			if(bh[loaimon].topping_choice=='Y') topping_store[0] = topping_choice;
 			cout << "Ban muon goi them mon nua khong? Bam Y de dong y.";
 			cin >> choice_new;
 			while (choice_new == 'Y')
@@ -545,7 +673,12 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 				cin >> loaimon;
 				loaimon_store_num++;
 				loaimon_store[loaimon_store_num] = loaimon;
-				LuaChonMon(DoUong, bh, loaimon);
+				LuaChonMon(DoUong, bh, loaimon, topping, topping_num, topping_choice);
+				if (bh[loaimon_store[loaimon_store_num]].topping_choice == 'Y')
+				{
+					topping_store_num++;
+					topping_store[topping_store_num] = topping_choice;
+				}
 				cout << "Ban muon goi them mon nua khong? Bam Y de dong y.";
 				cin >> choice_new;
 			}
@@ -554,11 +687,19 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num)
 				//float tt = ThanhToan(DoUong, bh, loaimon_store[loaimon_store_num]);
 				for (int i = 0; i < loaimon_store_num + 1; i++)
 				{
-					float tt = ThanhToan(DoUong, bh, loaimon_store[i]);
-					price[i] = tt;
+					for (int j = i; j <= i; j++)
+					{
+						float tt = ThanhToan(DoUong, bh, loaimon_store[i], topping_store[j], topping);
+						price[i] = tt;
+					}
 				}
 			}
-			InHoaDon(DoUong, bh, loaimon_store_num + 1, price);
+			else
+			{
+				float tt = ThanhToan(DoUong, bh, loaimon_store[0], topping_store[0], topping);
+				price[0] = tt;
+			}
+			InHoaDon(DoUong, bh, loaimon_store_num + 1, price, topping, topping_store, loaimon_store);
 			system("pause");
 			break;
 		}
@@ -588,6 +729,7 @@ void main()
 	delete[] DoUong;*/
 	int n = 0;
 	int m = 0;
+	int p = 0;
 	int nv = 0;
-	MainMenu(nv, n, m);
+	MainMenu(nv, n, m, p);
 }

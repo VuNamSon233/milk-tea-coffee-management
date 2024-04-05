@@ -1,0 +1,4 @@
+Danh sach nhan vien:
+ Manv        Ho Ten     Ngay Sinh   Dia Chi        CMT   LuongCB   Phu Cap  Thuc Linh           
+       123      Vu Van A     23/3/2003      DHQG     4349388     1e+06     20000   1.02e+06           
+       456      Vu Thi C     12/2/1900       HCM    48938438     2e+06     20000   2.02e+06           

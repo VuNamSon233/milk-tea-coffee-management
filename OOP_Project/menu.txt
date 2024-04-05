@@ -1,0 +1,4 @@
+
+ Mo file thanh cong. Dang thuc hien xuat menu vao file menu.txt
+Tra sua - 20000 VND
+Nuoc loc - 40000 VND
