@@ -366,7 +366,7 @@ void inMenu(MonDoUong DoUong[], int m) {
 static void xuatMenuFile(MonDoUong DoUong[], int m) {
 	ofstream menuFile("menu.txt");
 	if (menuFile.is_open()) {
-		menuFile << "\n Mo file thanh cong. Dang thuc hien xuat menu vao file menu.txt" << endl;
+		menuFile << "\n Menu" << endl;
 		for (int i = 0; i < m; ++i) {
 			menuFile << DoUong[i].ten << " - " << DoUong[i].gia << " VND" << endl;
 		}
