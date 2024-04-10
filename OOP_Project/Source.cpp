@@ -174,7 +174,7 @@ void timphucap(nhanvien nv[], int n) {
 	cout << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12);
 
 	for (int i = 0; i < n; i++) {
-		if (nv[i].get_phucap() > 500000) {
+		if (nv[i].get_phucap() > 100000) {
 			nv[i].xuat();
 		}
 	}
