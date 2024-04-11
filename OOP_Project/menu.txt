@@ -1,4 +1,5 @@
 
- Mo file thanh cong. Dang thuc hien xuat menu vao file menu.txt
+ Menu
 Tra sua - 20000 VND
-Nuoc loc - 40000 VND
+Tra thai xanh - 30000 VND
+Oreo cheese - 50000 VND

@@ -8,26 +8,26 @@ const int MAX_ORDER = 1000;
 void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num);
 class nhanvien {
 private:
-	int Manv, Cmt;
+	long int Manv, Cmt;
 	string hoten, ngaysinh, diachi;
 	float luongCB, phucap, thuclinh;
 public:
 	//xaydung phuongthuc nhap
 	void nhap() {
 		cin.ignore(1, '\n');
-		cout << " \n\nNhap ma nhan vien: "; cin >> Manv; //fflush(stdin); //xoa bo nho dem
+		cout << " \n\nNhap ma nhan vien: "; cin >> Manv; 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << " \nNhap ho ten: "; getline(cin, hoten); //fflush(stdin);
+		cout << " \nNhap ho ten: "; getline(cin, hoten); 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << " \nNhap ngay sinh: "; getline(cin, ngaysinh); //fflush(stdin);
+		cout << " \nNhap ngay sinh: "; getline(cin, ngaysinh); 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << " \nNhap dia chi: "; getline(cin, diachi); //fflush(stdin);
+		cout << " \nNhap dia chi: "; getline(cin, diachi); 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << " \nNhap so the CMT: "; cin >> Cmt; //fflush(stdin);
+		cout << " \nNhap so the CMT: "; cin >> Cmt; 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << " \nNhap luong co ban: "; cin >> luongCB; //fflush(stdin);
+		cout << " \nNhap luong co ban: "; cin >> luongCB; 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
-		cout << " \nNhap phu cap: "; cin >> phucap; //fflush(stdin);
+		cout << " \nNhap phu cap: "; cin >> phucap; 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		thuclinh = luongCB + phucap;
 	}
@@ -37,7 +37,7 @@ public:
 		cout << setw(12) << Cmt << setw(10) << luongCB << setw(10) << phucap << setw(11) << thuclinh;
 	}
 	//Lay gia tri thuoc tinh pham vi private
-	int get_Manv() {
+	long int get_Manv() {
 		return Manv;
 	}
 	string get_HoTen() {
@@ -52,7 +52,7 @@ public:
 	float get_luong() {
 		return luongCB;
 	}
-	int get_Cmt() {
+	long int get_Cmt() {
 		return Cmt;
 	}
 	float get_thuclinh() {
@@ -139,10 +139,11 @@ void sapxep(nhanvien nv[], int n) {
 	nhanvien tg;
 	for (int i = 0; i < n; i++) {
 		for (int j = i + 1; j < n; j++) {
-			if (nv[i].get_thuclinh() > nv[j].get_thuclinh())
+			if (nv[i].get_thuclinh() > nv[j].get_thuclinh()) {
 				tg = nv[i];
-			nv[i] = nv[j];
-			nv[j] = tg;
+				nv[i] = nv[j];
+				nv[j] = tg;
+			}
 		}
 	}
 	cout << " \nSau khi sap xep: " << endl;
@@ -193,13 +194,12 @@ void menu(nhanvien nv[], int n) {
 		cout << "==        5.Sap xep luong nhan vien tang dan.         ==\n";
 		cout << "==        6.Tinh tong luong cac nhan vien.            ==\n";
 		cout << "==        7.Tim kiem nhan vien thu nhap cao nhat.     ==\n";
-		cout << "==        8.Tim kiem nhan vien phu cap > 500.000.     ==\n";
+		cout << "==        8.Tim kiem nhan vien phu cap > 100.000.     ==\n";
 		cout << "==        9.Exit                                      ==\n";
 		cout << "========================================================\n";
 		cout << " \t Nhap lua chon cua ban: "; cin >> choice;
 		switch (choice) {
 		case 1:
-			//cout<<"Nhap so luong nhan vien: ";cin>>n;
 			nhapds(nv, n);
 			cout << endl;
 			system("\npause");
@@ -289,12 +289,8 @@ bool kiemTraNL(NguyenLieu NL[], int n) {
 }
 
 void themNguyenLieu(NguyenLieu NL[], int& n) {
-	/*int soLuong;
-	cout << "Nhap so luong nguyen lieu can them: ";
-	cin >> soLuong;*/
 	for (int i = 0; i < n; i++) {
 		NL[i].nhap();
-		//n++;
 	}
 }
 
@@ -336,9 +332,6 @@ public:
 };
 
 void themMonMenu(MonDoUong DoUong[], int& m) {
-	/*int soLuong;
-	cout << "Nhap so luong mon can them: ";
-	cin >> soLuong;*/
 	for (int i = 0; i < m; ++i) {
 		DoUong[i].nhap();
 		//m++;
@@ -370,7 +363,6 @@ static void xuatMenuFile(MonDoUong DoUong[], int m) {
 		for (int i = 0; i < m; ++i) {
 			menuFile << DoUong[i].ten << " - " << DoUong[i].gia << " VND" << endl;
 		}
-		//cout << "Menu đã được xuất sang menu.txt thành công!" << endl;
 		cout << "Menu da duoc xuat sang menu.txt thanh cong!" << endl;
 		cout << "Moi quy khach lua chon!" << endl;
 		cout << "Cam on quy khach!" << endl;
@@ -444,8 +436,6 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m, Topping topping
 			cin >> dem;
 			switch (dem) {
 			case 1:
-				/*cout << "Moi ban nhap so luong nguyen lieu muon them vao: ";
-				cin >> n;*/
 				cin.ignore(1, '\n');
 				themNguyenLieu(NL, n);
 				break;
@@ -478,8 +468,6 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m, Topping topping
 			cin >> dem;
 			switch (dem) {
 			case 1:
-				/*cout << "Moi ban nhap so luong mon do uong muon them vao: ";
-				cin >> m;*/
 				cin.ignore(1, '\n');
 				themMonMenu(DoUong, m);
 				break;
@@ -554,7 +542,6 @@ float ThanhToan(MonDoUong douong[], BanHang bh[], int m, int topping_choice, Top
 	float price;
 	if (bh[m].topping_choice == 'Y') price = ((float)bh[m].soluongmon * douong[m].gia) + topping[topping_choice].gia;
 	else price = (float)bh[m].soluongmon * douong[m].gia;
-	//cout << price;
 	return price;
 }
 void InHoaDon(MonDoUong douong[], BanHang bh[], int m, float price[], Topping topping[], int topping_choice[], int loaimon[])
@@ -618,7 +605,7 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num, int& top
 		cout << "\n2. Phan loai nguyen lieu, tao menu";
 		cout << "\n3. Ban hang";
 		cout << "\n0. Thoat chuong trinh";
-		cout << "\nMoi ban nhap so luong mon an muon them vao: ";
+		cout << "\nMoi ban nhap so luong do uong muon them vao: ";
 		cin >> monuong_num;
 		cin.ignore(1, '\n');
 		MonDoUong* DoUong = new MonDoUong[monuong_num];
@@ -643,9 +630,6 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num, int& top
 			cin >> nguyenlieu_num;
 			NguyenLieu* NL = new NguyenLieu[nguyenlieu_num];
 			quanLy(NL, nguyenlieu_num, DoUong, monuong_num, topping, topping_num);
-			//delete[] NL;
-			//delete[] DoUong;
-			//break;
 		}
 		case 3:
 			char choice_new;
@@ -684,7 +668,6 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num, int& top
 			}
 			if (loaimon_store_num != 0)
 			{
-				//float tt = ThanhToan(DoUong, bh, loaimon_store[loaimon_store_num]);
 				for (int i = 0; i < loaimon_store_num + 1; i++)
 				{
 					for (int j = i; j <= i; j++)
@@ -708,25 +691,6 @@ void MainMenu(int& nhanvien_num, int& nguyenlieu_num, int& monuong_num, int& top
 
 void main()
 {
-	/*int n;
-	cout << "Chao mung ban den voi phan mem quan ly ban tra sua! Xin moi nhap so nhan vien: ";
-	cin >> n;
-	nhanvien* nv = new nhanvien[n];
-	menu(nv, n);*/
-	/*int n = 3;
-	int m = 3;*/
-	/*int n=0;
-	int m=0;
-	cout << "Moi ban nhap so luong nguyen lieu muon them vao: ";
-	cin >> n;
-	cout << "Moi ban nhap so luong mon an muon them vao: ";
-	cin >> m;
-	cin.ignore(1, '\n');
-	NguyenLieu* NL = new NguyenLieu[n];
-	MonDoUong* DoUong = new MonDoUong[m];
-	quanLy(NL, n, DoUong, m);
-	delete[] NL;
-	delete[] DoUong;*/
 	int n = 0;
 	int m = 0;
 	int p = 0;
