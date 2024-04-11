@@ -451,6 +451,7 @@ void quanLy(NguyenLieu NL[], int& n, MonDoUong DoUong[], int& m, Topping topping
 			case 4:
 				cin.ignore(1, '\n');
 				kiemTraMonHet(NL, n);
+				system("pause");
 				break;
 			default:
 				break;

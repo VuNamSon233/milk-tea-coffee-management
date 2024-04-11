@@ -1,5 +1,5 @@
 Hoa don thanh toan: 
 Ten do uong	So luong	Gia
-1. Tra sua	3	60000
-Tong tien can thanh toan: 60000
+1. 	0	-0
+Tong tien can thanh toan: 0
 Cam on quy khach! Hen gap lai
