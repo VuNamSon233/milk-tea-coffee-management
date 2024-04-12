@@ -1,6 +1,4 @@
 Danh sach nhan vien:
  Manv        Ho Ten     Ngay Sinh   Dia Chi        CMT   LuongCB   Phu Cap  Thuc Linh           
-        12      Vu Van A    28/12/2003      dhqg       12356    100000     20000     120000           
-        13      Vu Van C     29/2/2003        hn       56786    500000     50000     550000           
-        14    Tran Van Z    29/12/2024        bd       88989     1e+06    300000    1.3e+06           
-        16    Le Van Cap    31/12/1940        gl       88774     5e+06    500000    5.5e+06           
+        12      vu van a     28/2/2003       hcm       77889     1e+06    200000    1.2e+06           
+        13    tran van c      3/2/1930        hn       33345     2e+06     20000   2.02e+06           

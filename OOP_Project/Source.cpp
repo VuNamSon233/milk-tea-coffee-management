@@ -172,11 +172,12 @@ void thuclinhMax(nhanvien nv[], int n) {
 void timphucap(nhanvien nv[], int n) {
 	cout << "Nhan vien co phu cap > 100.000 vnd:";
 	cout << "\n Manv" << setw(14) << "Ho Ten" << setw(14) << "Ngay Sinh" << setw(10) << "Dia Chi" << setw(11);
-	cout << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12);
+	cout << "CMT" << setw(10) << "LuongCB" << setw(10) << "Phu Cap" << setw(11) << "Thuc Linh" << setw(12) << endl;
 
 	for (int i = 0; i < n; i++) {
 		if (nv[i].get_phucap() > 100000) {
 			nv[i].xuat();
+			cout << endl;
 		}
 	}
 }
